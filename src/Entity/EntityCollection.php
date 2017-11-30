@@ -1,7 +1,7 @@
 <?php
 namespace Sellastica\Entity\Entity;
 
-use Sellastica\Core\Collection;
+use Sellastica\Core\Model\Collection;
 
 /**
  * @property IEntity[] $items
@@ -11,7 +11,7 @@ class EntityCollection extends Collection
 {
 	/**
 	 * @param IEntity $entity
-	 * @return Collection
+	 * @return \Sellastica\Core\Model\Collection
 	 * @throws \InvalidArgumentException If argument is not IEntity instance
 	 */
 	public function remove($entity): Collection

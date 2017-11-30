@@ -2,7 +2,7 @@
 namespace Sellastica\Entity\Mapping;
 
 use Nette;
-use Sellastica\Core\Cache;
+use Sellastica\Core\Model\Cache;
 use Sellastica\Entity\Configuration;
 use Sellastica\Entity\Entity\EntityCollection;
 use Sellastica\Entity\Entity\EntityFactory;
@@ -16,7 +16,7 @@ abstract class Dao implements IDao
 {
 	/** @var \Sellastica\Entity\Mapping\IMapper */
 	protected $mapper;
-	/** @var Cache */
+	/** @var \Sellastica\Core\Model\Cache */
 	protected $cache;
 	/** @var string */
 	protected $entityName;

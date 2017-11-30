@@ -5,7 +5,7 @@ use Dibi;
 use Dibi\Fluent;
 use Nette;
 use Nette\Utils\Paginator;
-use Sellastica\Core\Cache;
+use Sellastica\Core\Model\Cache;
 use Sellastica\Entity\Configuration;
 use Sellastica\Entity\Entity\IEntity;
 use Sellastica\Entity\Exception\StorageDuplicateEntryException;
