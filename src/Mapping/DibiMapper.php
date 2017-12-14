@@ -18,8 +18,7 @@ use Sellastica\Utils\Strings;
 abstract class DibiMapper implements IMapper
 {
 	const CACHE_ACTIVE = false,
-		MIN_AUTOINCREMENT = 1000001,
-		CRM_DATABASE = 'crm';
+		MIN_AUTOINCREMENT = 1000001;
 
 	/** @var array */
 	private static $identities = [];
@@ -29,6 +28,8 @@ abstract class DibiMapper implements IMapper
 	protected $database;
 	/** @var Cache */
 	protected $cache;
+	/** @var \Sellastica\Core\Model\Environment */
+	protected $environment;
 	/** @var string In case of mysql storage it is a table name */
 	private $tableName;
 
@@ -36,14 +37,18 @@ abstract class DibiMapper implements IMapper
 	/**
 	 * @param Nette\DI\Container $container
 	 * @param Nette\Caching\IStorage $storage
+	 * @param \Sellastica\Core\Model\Environment $environment
+	 * @throws Nette\DI\MissingServiceException
 	 */
 	public function __construct(
 		Nette\DI\Container $container,
-		Nette\Caching\IStorage $storage
+		Nette\Caching\IStorage $storage,
+		\Sellastica\Core\Model\Environment $environment
 	)
 	{
 		$this->cache = new Cache($storage, Cache::QUERY_CACHE_NAMESPACE);
 		$this->database = $container->getService('dibi');
+		$this->environment = $environment;
 	}
 
 	/**
@@ -68,7 +73,7 @@ abstract class DibiMapper implements IMapper
 
 		if (true === $databaseName
 			&& $this->isInCrmDatabase()) {
-			return self::CRM_DATABASE . '.' . $this->tableName;
+			return $this->environment->getCrmDatabaseName() . '.' . $this->tableName;
 		} else {
 			return $this->tableName;
 		}
