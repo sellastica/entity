@@ -177,10 +177,9 @@ class EntityManager
 	}
 
 	/**
-	 * @param IEntity $entity
 	 * @param \Sellastica\Entity\Relation\ManyToManyRelation $relation
 	 */
-	public function addRelation(IEntity $entity, ManyToManyRelation $relation)
+	public function addRelation(ManyToManyRelation $relation)
 	{
 		$this->checkLock();
 		$this->unitOfWork->addRelation($relation);

@@ -23,7 +23,7 @@ class ManageEntityEventSubscriber implements IDomainEventSubscriber
 	{
 		if ($event instanceof ManageMNRelationDomainEvent) {
 			//M:N relations
-			$this->entityManager->addRelation($event->getAffectedEntity(), $event->getManyToManyRelation());
+			$this->entityManager->addRelation($event->getManyToManyRelation());
 		} elseif ($event instanceof ManageAggregateDomainEvent) {
 			if ($event->shouldPersist()) {
 				$this->entityManager->persist($event->getAggregateRoot());

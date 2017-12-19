@@ -677,7 +677,10 @@ abstract class DibiMapper implements IMapper
 	 */
 	public function addRelation(ManyToManyRelation $relation)
 	{
-		$tableName = $relation->getTableName();
+		$tableName = $relation->isCrmDatabase()
+			? $this->environment->getCrmDatabaseName() . '.' . $relation->getTableName()
+			: $relation->getTableName();
+
 		$resource = $this->database
 			->insert($tableName, $relation->toArray());
 
@@ -695,7 +698,10 @@ abstract class DibiMapper implements IMapper
 	 */
 	public function removeRelation(ManyToManyRelation $relation)
 	{
-		$tableName = $relation->getTableName();
+		$tableName = $relation->isCrmDatabase()
+			? $this->environment->getCrmDatabaseName() . '.' . $relation->getTableName()
+			: $relation->getTableName();
+
 		$resource = $this->database->delete($tableName)
 			->where("(%and)", $relation->toArray());
 

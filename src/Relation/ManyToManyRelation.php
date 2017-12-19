@@ -62,4 +62,12 @@ abstract class ManyToManyRelation
 		$tableName = Strings::fromCamelCase($tableName);
 		return str_replace('_relation', '_rel', $tableName);
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function isCrmDatabase(): bool
+	{
+		return false;
+	}
 }
