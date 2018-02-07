@@ -3,23 +3,23 @@ namespace Sellastica\Entity;
 
 class SorterRule
 {
+	const ASCENDING = 'ASC',
+		DESCENDING = 'DESC';
+
 	/** @var string */
 	private $column;
 	/** @var bool */
-	private $isAscending;
-
-	const ASCENDING = 'ASC';
-	const DESCENDING = 'DESC';
+	private $ascending;
 
 
 	/**
 	 * @param string $column
-	 * @param bool $isAscending
+	 * @param bool $ascending
 	 */
-	public function __construct($column, $isAscending)
+	public function __construct(string $column, bool $ascending)
 	{
 		$this->column = $column;
-		$this->isAscending = (bool)$isAscending;
+		$this->ascending = $ascending;
 	}
 
 	/**
@@ -33,7 +33,7 @@ class SorterRule
 	/**
 	 * @param string $column
 	 */
-	public function setColumn(string $column)
+	public function setColumn(string $column): void
 	{
 		$this->column = $column;
 	}
@@ -43,17 +43,15 @@ class SorterRule
 	 */
 	public function isAscending(): bool
 	{
-		return $this->isAscending;
+		return $this->ascending;
 	}
 
-	public function setAscending(): void
+	/**
+	 * @param bool $ascending
+	 */
+	public function setAscending(bool $ascending): void
 	{
-		$this->isAscending = true;
-	}
-
-	public function setDescending(): void
-	{
-		$this->isAscending = false;
+		$this->ascending = $ascending;
 	}
 
 	/**
@@ -61,6 +59,6 @@ class SorterRule
 	 */
 	public function getDirection(): string
 	{
-		return $this->isAscending ? self::ASCENDING : self::DESCENDING;
+		return $this->ascending ? self::ASCENDING : self::DESCENDING;
 	}
 }

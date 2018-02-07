@@ -44,7 +44,7 @@ interface IRepository
 	/**
 	 * @param array $filterValues
 	 * @param Configuration|null $configuration
-	 * @return IEntity|null
+	 * @return IEntity|mixed|null
 	 */
 	function findOneBy(array $filterValues, Configuration $configuration = null): ?IEntity;
 

@@ -43,17 +43,23 @@ class Sorter
 	}
 
 	/**
-	 * @param string $sort
+	 * @param string $column
 	 * @return bool
 	 */
-	public function isSortedBy(string $sort): bool
+	public function isSortedBy(string $column): bool
 	{
-		foreach ($this->rules as $rule) {
-			if ($rule->getColumn() === $sort) {
-				return true;
+		return (bool)$this->getRule($column);
+	}
+
+	/**
+	 * @param string $column
+	 */
+	public function removeRule(string $column): void
+	{
+		foreach ($this->rules as $key => $rule) {
+			if ($rule->getColumn() === $column) {
+				unset($this->rules[$key]);
 			}
 		}
-
-		return false;
 	}
 }
