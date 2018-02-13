@@ -95,13 +95,18 @@ interface IMapper
 	function findCountBy(array $filterValues): int;
 
 	/**
-	 * @param string $key
+	 * @param string|null $key
 	 * @param string $value
 	 * @param array $filterValues
 	 * @param Configuration $configuration
 	 * @return array
 	 */
-	function findPairs($key, $value, array $filterValues = [], Configuration $configuration = null): array;
+	function findPairs(
+		string $key = null,
+		string $value,
+		array $filterValues = [],
+		Configuration $configuration = null
+	): array;
 
 	/**
 	 * @param array $filterValues

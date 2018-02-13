@@ -275,13 +275,18 @@ abstract class Dao implements IDao
 	}
 
 	/**
-	 * @param string $key
+	 * @param string|null $key
 	 * @param string $value
 	 * @param array $filterValues
 	 * @param Configuration $configuration
 	 * @return array
 	 */
-	public function findPairs($key, $value, array $filterValues = [], Configuration $configuration = null): array
+	public function findPairs(
+		string $key = null,
+		string $value,
+		array $filterValues = [],
+		Configuration $configuration = null
+	): array
 	{
 		return $this->mapper->findPairs($key, $value, $filterValues, $configuration);
 	}

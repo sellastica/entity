@@ -177,8 +177,8 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	 * {@inheritDoc}
 	 */
 	public function findPairs(
-		$key,
-		$value,
+		string $key = null,
+		string $value,
 		array $filterValues = [],
 		Configuration $configuration = null
 	): array

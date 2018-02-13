@@ -200,15 +200,15 @@ abstract class Repository implements IRepository
 	}
 
 	/**
-	 * @param string $key
+	 * @param string|null $key
 	 * @param string $value
 	 * @param array $filterValues
 	 * @param \Sellastica\Entity\Configuration $configuration
 	 * @return array
 	 */
 	public function findPairs(
-		$key,
-		$value,
+		string $key = null,
+		string $value,
 		array $filterValues = [],
 		Configuration $configuration = null
 	): array

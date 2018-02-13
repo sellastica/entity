@@ -397,17 +397,26 @@ abstract class DibiMapper implements IMapper
 	}
 
 	/**
-	 * @param string $key
+	 * @param string|null $key
 	 * @param string $value
 	 * @param array $filterValues
 	 * @param \Sellastica\Entity\Configuration $configuration
 	 * @return array
 	 */
-	public function findPairs($key, $value, array $filterValues = [], Configuration $configuration = null): array
+	public function findPairs(
+		string $key = null,
+		string $value,
+		array $filterValues = [],
+		Configuration $configuration = null
+	): array
 	{
 		$resource = $this->getResource($configuration)
 			->select(false)
-			->select('%n.%n, %n.%n', $this->getTableName(), $key, $this->getTableName(), $value);
+			->select('%n.%n', $this->getTableName(), $value);
+
+		if ($key !== null) {
+			$resource->select('%n.%n', $this->getTableName(), $key);
+		}
 
 		if (sizeof($filterValues)) {
 			$resource->where($filterValues);
@@ -1037,12 +1046,17 @@ abstract class DibiMapper implements IMapper
 
 	/**
 	 * @param Fluent $resource
-	 * @param string $key
+	 * @param string|null $key
 	 * @param string $value
 	 * @param array $dependentEntities
 	 * @return array
 	 */
-	protected function fetchPairs(Fluent $resource, $key, $value, array $dependentEntities = [])
+	protected function fetchPairs(
+		Fluent $resource,
+		string $key = null,
+		string $value,
+		array $dependentEntities = []
+	)
 	{
 		$callback = function () use ($resource, $key, $value) {
 			return $resource->fetchPairs($key, $value);
