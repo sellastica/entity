@@ -136,6 +136,26 @@ abstract class Repository implements IRepository
 	}
 
 	/**
+	 * @param \Sellastica\Entity\Entity\Condition[]|\Sellastica\Entity\Entity\ConditionCollection $conditions
+	 * @param Configuration $configuration
+	 * @return EntityCollection
+	 */
+	public function findByConditions($conditions, Configuration $configuration = null): EntityCollection
+	{
+		if (is_array($conditions)) {
+			$conditions = new \Sellastica\Entity\Entity\ConditionCollection($conditions);
+		}
+
+		if (!$conditions instanceof \Sellastica\Entity\Entity\ConditionCollection) {
+			throw new \Exception('Conditions must be instance of \Sellastica\Entity\Entity\ConditionCollection');
+		}
+
+		return $this->initialize(
+			$this->dao->findByConditions($conditions, $configuration)
+		);
+	}
+
+	/**
 	 * @param string $column
 	 * @param array $values
 	 * @param string $modifier

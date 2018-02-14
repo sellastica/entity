@@ -229,6 +229,20 @@ abstract class Dao implements IDao
 	}
 
 	/**
+	 * @param \Sellastica\Entity\Entity\ConditionCollection $conditions
+	 * @param Configuration $configuration
+	 * @return EntityCollection
+	 */
+	public function findByConditions(
+		\Sellastica\Entity\Entity\ConditionCollection $conditions,
+		Configuration $configuration = null
+	): EntityCollection
+	{
+		$idsArray = $this->mapper->findByConditions($conditions, $configuration);
+		return $this->getEntitiesFromCacheOrStorage($idsArray);
+	}
+
+	/**
 	 * @param string $column
 	 * @param array $values
 	 * @param string $modifier

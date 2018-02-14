@@ -63,6 +63,18 @@ interface IMapper
 	function findBy(array $filterValues, Configuration $configuration = null): array;
 
 	/**
+	 * @param \Sellastica\Entity\Entity\ConditionCollection $conditions
+	 * @param \Sellastica\Entity\Configuration $configuration
+	 * @param \Dibi\Fluent $resource
+	 * @return array
+	 */
+	public function findByConditions(
+		\Sellastica\Entity\Entity\ConditionCollection $conditions,
+		Configuration $configuration = null,
+		Dibi\Fluent $resource = null
+	): array;
+
+	/**
 	 * @param string $column
 	 * @param array $values
 	 * @param string $modifier

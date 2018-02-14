@@ -117,11 +117,15 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	}
 
 	/**
-	 * @param string $column
-	 * @param array $values
-	 * @param string $modifier
-	 * @param Configuration $configuration
-	 * @return EntityCollection
+	 * {@inheritDoc}
+	 */
+	public function findByConditions($conditions, Configuration $configuration = null): EntityCollection
+	{
+		return $this->getRepository()->findByConditions($conditions, $configuration);
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public function findIn(
 		string $column,

@@ -63,6 +63,16 @@ interface IDao
 	function findBy(array $filterValues, Configuration $configuration = null): EntityCollection;
 
 	/**
+	 * @param \Sellastica\Entity\Entity\ConditionCollection $conditions
+	 * @param Configuration $configuration
+	 * @return EntityCollection
+	 */
+	function findByConditions(
+		\Sellastica\Entity\Entity\ConditionCollection $conditions,
+		Configuration $configuration = null
+	): EntityCollection;
+
+	/**
 	 * @param string $column
 	 * @param array $values
 	 * @param string $modifier

@@ -328,6 +328,27 @@ abstract class DibiMapper implements IMapper
 	}
 
 	/**
+	 * @param \Sellastica\Entity\Entity\ConditionCollection $conditions
+	 * @param \Sellastica\Entity\Configuration $configuration
+	 * @param \Dibi\Fluent $resource
+	 * @return array
+	 */
+	public function findByConditions(
+		\Sellastica\Entity\Entity\ConditionCollection $conditions,
+		Configuration $configuration = null,
+		Dibi\Fluent $resource = null
+	): array
+	{
+		$resource = $resource ?: $this->getResourceWithIds($configuration);
+		foreach ($conditions as $key => $condition) {
+			$resource->where($condition->toString(), $condition->getValue());
+		}
+
+		$this->applyConfiguration($resource, $configuration);
+		return $this->fetchArray($resource);
+	}
+
+	/**
 	 * @param string $column
 	 * @param array $values
 	 * @param string $modifier

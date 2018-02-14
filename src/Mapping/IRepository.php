@@ -62,6 +62,13 @@ interface IRepository
 	function findBy(array $filterValues, Configuration $configuration = null): EntityCollection;
 
 	/**
+	 * @param \Sellastica\Entity\Entity\Condition[]|\Sellastica\Entity\Entity\ConditionCollection $conditions
+	 * @param Configuration $configuration
+	 * @return EntityCollection
+	 */
+	function findByConditions($conditions, Configuration $configuration = null): EntityCollection;
+
+	/**
 	 * @param string $column
 	 * @param array $values
 	 * @param string $modifier
