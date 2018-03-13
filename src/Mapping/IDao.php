@@ -10,6 +10,11 @@ use Sellastica\Entity\Relation\RelationGetManager;
 interface IDao
 {
 	/**
+	 * @return \Sellastica\Entity\Entity\EntityCollection
+	 */
+	function getEmptyCollection(): EntityCollection;
+
+	/**
 	 * @return int
 	 */
 	function nextIdentity(): int;

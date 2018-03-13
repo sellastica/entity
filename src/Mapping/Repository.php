@@ -35,6 +35,14 @@ abstract class Repository implements IRepository
 	}
 
 	/**
+	 * @return \Sellastica\Entity\Entity\EntityCollection
+	 */
+	public function getEmptyCollection(): EntityCollection
+	{
+		return $this->dao->getEmptyCollection();
+	}
+
+	/**
 	 * @return int
 	 */
 	public function nextIdentity(): int

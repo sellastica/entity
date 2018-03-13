@@ -9,6 +9,11 @@ use Sellastica\Entity\Relation\RelationGetManager;
 interface IRepository
 {
 	/**
+	 * @return \Sellastica\Entity\Entity\EntityCollection
+	 */
+	function getEmptyCollection(): EntityCollection;
+	
+	/**
 	 * @return int
 	 */
 	function nextIdentity(): int;
@@ -200,7 +205,6 @@ interface IRepository
 	/**
 	 * @param int $entityId
 	 * @param array $columns
-	 * @return
 	 */
 	function saveUncachedColumns(int $entityId, array $columns);
 }

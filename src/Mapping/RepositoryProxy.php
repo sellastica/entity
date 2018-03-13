@@ -40,6 +40,14 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	}
 
 	/**
+	 * @return \Sellastica\Entity\Entity\EntityCollection
+	 */
+	public function getEmptyCollection(): EntityCollection
+	{
+		return $this->getRepository()->getEmptyCollection();
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function nextIdentity(): int

@@ -308,7 +308,7 @@ abstract class Dao implements IDao
 	/**
 	 * @return \Sellastica\Entity\Entity\EntityCollection
 	 */
-	abstract protected function getEmptyCollection(): EntityCollection;
+	abstract public function getEmptyCollection(): EntityCollection;
 
 	/**
 	 * @param array $idsArray
