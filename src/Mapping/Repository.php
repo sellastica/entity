@@ -58,7 +58,7 @@ abstract class Repository implements IRepository
 	 */
 	public function find($id = null, $first = null, $second = null): ?IEntity
 	{
-		if (empty($id)) {
+		if (empty($id) || !is_numeric($id)) {
 			return null;
 		}
 
@@ -333,7 +333,7 @@ abstract class Repository implements IRepository
 	 */
 	public function findPublishable(int $id = null)
 	{
-		if (!isset($id)) {
+		if (empty($id) || !is_numeric($id)) {
 			return null;
 		}
 
