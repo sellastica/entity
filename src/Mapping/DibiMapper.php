@@ -596,8 +596,14 @@ abstract class DibiMapper implements IMapper
 	 */
 	public function deleteAll()
 	{
-		$this->database->query('DELETE FROM %n', $this->getTableName(true));
-		$this->cleanAllCache(); //2nd
+		try {
+			$this->database->query('DELETE FROM %n', $this->getTableName(true));
+			$this->cleanAllCache(); //2nd
+		} catch (Dibi\ForeignKeyConstraintViolationException $e) {
+			throw new \Sellastica\Entity\Exception\ForeignKeyConstraintViolationException(
+				$e->getMessage(), $e->getCode(), $e
+			);
+		}
 	}
 
 	/**
@@ -605,11 +611,17 @@ abstract class DibiMapper implements IMapper
 	 */
 	public function deleteById(int $id)
 	{
-		$this->database
-			->delete($this->getTableName(true))
-			->where('%n.id = %i', $this->getTableName(), $id)
-			->execute();
-		$this->cleanAllCache(); //2nd - because of foreign key storage dependencies
+		try {
+			$this->database
+				->delete($this->getTableName(true))
+				->where('%n.id = %i', $this->getTableName(), $id)
+				->execute();
+			$this->cleanAllCache(); //2nd - because of foreign key storage dependencies
+		} catch (Dibi\ForeignKeyConstraintViolationException $e) {
+			throw new \Sellastica\Entity\Exception\ForeignKeyConstraintViolationException(
+				$e->getMessage(), $e->getCode(), $e
+			);
+		}
 	}
 
 	/**
