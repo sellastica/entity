@@ -216,4 +216,14 @@ abstract class AbstractEntity implements IEntity
 	{
 		return $this->hasFlag(IEntity::FLAG_REMOVE);
 	}
+
+	/**
+	 * @param IEntity $entity
+	 * @return bool
+	 */
+	public function equals(IEntity $entity): bool
+	{
+		return get_class($entity) === get_class($this)
+			&& $this->id === $entity->getId();
+	}
 }
