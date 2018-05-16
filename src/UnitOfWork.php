@@ -1,11 +1,6 @@
 <?php
 namespace Sellastica\Entity;
 
-use Sellastica\Entity\Entity\IAggregateMember;
-use Sellastica\Entity\Entity\IAggregateRoot;
-use Sellastica\Entity\Entity\IEntity;
-use Sellastica\Entity\Relation\ManyToManyRelation;
-
 class UnitOfWork
 {
 	/** @var array */
@@ -16,7 +11,7 @@ class UnitOfWork
 
 	/**
 	 * @param callable $function
-	 * @return IEntity[]
+	 * @return \Sellastica\Entity\Entity\IEntity[]
 	 */
 	public function getEntitiesBy(callable $function): array
 	{
@@ -42,7 +37,7 @@ class UnitOfWork
 		foreach ($this->entities as $class => $entities) {
 			/**
 			 * @var int $key
-			 * @var IEntity $entity
+			 * @var \Sellastica\Entity\Entity\IEntity $entity
 			 */
 			foreach ($entities as $key => $entity) {
 				if ($entity->getEntityMetadata()->getState()->isNew()
@@ -65,7 +60,7 @@ class UnitOfWork
 		foreach ($this->entities as $class => $entities) {
 			/**
 			 * @var int $key
-			 * @var IEntity $entity
+			 * @var \Sellastica\Entity\Entity\IEntity $entity
 			 */
 			foreach ($entities as $key => $entity) {
 				if ($entity->getEntityMetadata()->getState()->isPersisted()
@@ -80,48 +75,58 @@ class UnitOfWork
 
 	/**
 	 * @param string $className
-	 * @return IEntity[]
+	 * @return \Sellastica\Entity\Entity\IEntity[]
 	 */
 	public function getEntitiesByClassName(string $className): array
 	{
 		return $this->entities[$className] ?? [];
-		return $this->getEntitiesBy(function (IEntity $entity) use ($className) {
-			return $entity instanceof $className;
-		});
 	}
 
 	/**
-	 * @param IEntity $entity
+	 * @return int
+	 */
+	public function getEntitiesCount(): int
+	{
+		$count = 0;
+		foreach ($this->entities as $class => $entities) {
+			$count += sizeof($entities);
+		}
+
+		return $count;
+	}
+
+	/**
+	 * @param \Sellastica\Entity\Entity\IEntity $entity
 	 * @param callable $function
 	 * @return bool
 	 */
-	private function matchesCallable(IEntity $entity, callable $function): bool
+	private function matchesCallable(\Sellastica\Entity\Entity\IEntity $entity, callable $function): bool
 	{
 		return $function($entity);
 	}
 
 	/**
-	 * @param IEntity $entity
+	 * @param \Sellastica\Entity\Entity\IEntity $entity
 	 */
-	public function remove(IEntity $entity)
+	public function remove(\Sellastica\Entity\Entity\IEntity $entity)
 	{
 		$this->attach($entity);
-		$entity->setFlag(IEntity::FLAG_REMOVE);
+		$entity->setFlag(\Sellastica\Entity\Entity\IEntity::FLAG_REMOVE);
 	}
 
 	/**
-	 * @param IEntity $entity
+	 * @param \Sellastica\Entity\Entity\IEntity $entity
 	 */
-	private function unremove(IEntity $entity)
+	private function unremove(\Sellastica\Entity\Entity\IEntity $entity)
 	{
-		$entity->removeFlag(IEntity::FLAG_REMOVE);
+		$entity->removeFlag(\Sellastica\Entity\Entity\IEntity::FLAG_REMOVE);
 	}
 
 	/**
 	 * Adds entity to entities (loaded from persistence storage) entites
-	 * @param IEntity $entity
+	 * @param \Sellastica\Entity\Entity\IEntity $entity
 	 */
-	public function attach(IEntity $entity)
+	public function attach(\Sellastica\Entity\Entity\IEntity $entity)
 	{
 		$this->detach($entity, false);
 		$this->entities[get_class($entity)][$this->getKey($entity)] = $entity;
@@ -129,10 +134,10 @@ class UnitOfWork
 
 	/**
 	 * Detaches entity from the UoW
-	 * @param IEntity $entity
+	 * @param \Sellastica\Entity\Entity\IEntity $entity
 	 * @param bool $detachDependencies
 	 */
-	public function detach(IEntity $entity, bool $detachDependencies = true)
+	public function detach(\Sellastica\Entity\Entity\IEntity $entity, bool $detachDependencies = true)
 	{
 		$this->unremove($entity);
 		$this->uncache($entity);
@@ -142,9 +147,9 @@ class UnitOfWork
 
 		$this->removeRelationByEntity($entity);
 		//remove dependent aggregate members
-		if ($entity instanceof IAggregateRoot) {
-			$aggregateMembers = $this->getEntitiesBy(function (IEntity $member) use ($entity) {
-				return $member instanceof IAggregateMember
+		if ($entity instanceof \Sellastica\Entity\Entity\IAggregateRoot) {
+			$aggregateMembers = $this->getEntitiesBy(function (\Sellastica\Entity\Entity\IEntity $member) use ($entity) {
+				return $member instanceof \Sellastica\Entity\Entity\IAggregateMember
 					&& $member->getAggregateRootClass() === get_class($entity)
 					&& $member->getAggregateId() === $entity->getId();
 			});
@@ -161,9 +166,9 @@ class UnitOfWork
 	 * We need to reload entity from the storage to have all its informations, e.g. created and modified date and
 	 * all values created as a default value in the storage
 	 *
-	 * @param IEntity $entity
+	 * @param \Sellastica\Entity\Entity\IEntity $entity
 	 */
-	private function uncache(IEntity $entity)
+	private function uncache(\Sellastica\Entity\Entity\IEntity $entity)
 	{
 		if (isset($this->entities[get_class($entity)][$this->getKey($entity)])) {
 			unset($this->entities[get_class($entity)][$this->getKey($entity)]);
@@ -174,9 +179,9 @@ class UnitOfWork
 	 * Loads entity from UoW, searches in all states
 	 * @param int $id
 	 * @param string $class
-	 * @return IEntity|null
+	 * @return \Sellastica\Entity\Entity\IEntity|null
 	 */
-	public function load(int $id, string $class): ?IEntity
+	public function load(int $id, string $class): ?\Sellastica\Entity\Entity\IEntity
 	{
 		return $this->entities[$class][$id] ?? null;
 	}
@@ -210,21 +215,21 @@ class UnitOfWork
 	}
 
 	/**
-	 * @param ManyToManyRelation $relation
+	 * @param \Sellastica\Entity\Relation\ManyToManyRelation $relation
 	 */
-	public function addRelation(ManyToManyRelation $relation)
+	public function addRelation(\Sellastica\Entity\Relation\ManyToManyRelation $relation)
 	{
 		$this->relations[get_class($relation->getEntity())][] = $relation;
 	}
 
 	/**
-	 * @param IEntity $entity
+	 * @param \Sellastica\Entity\Entity\IEntity $entity
 	 */
-	public function removeRelationByEntity(IEntity $entity)
+	public function removeRelationByEntity(\Sellastica\Entity\Entity\IEntity $entity)
 	{
 		foreach ($this->relations as $className => $relations) {
 			foreach ($relations as $key => $relation) {
-				/** @var ManyToManyRelation $relation */
+				/** @var \Sellastica\Entity\Relation\ManyToManyRelation $relation */
 				if ($relation->getEntity() instanceof $entity
 					|| $relation->getRelatedEntity() instanceof $entity) {
 					unset($this->relations[$className][$key]);
@@ -234,19 +239,19 @@ class UnitOfWork
 	}
 
 	/**
-	 * @param IEntity $entity
+	 * @param \Sellastica\Entity\Entity\IEntity $entity
 	 * @return bool
 	 */
-	public function isCached(IEntity $entity): bool
+	public function isCached(\Sellastica\Entity\Entity\IEntity $entity): bool
 	{
 		return isset($this->entities[get_class($entity)][$this->getKey($entity)]);
 	}
 
 	/**
-	 * @param IEntity $entity
+	 * @param \Sellastica\Entity\Entity\IEntity $entity
 	 * @return string
 	 */
-	private function getKey(IEntity $entity): string
+	private function getKey(\Sellastica\Entity\Entity\IEntity $entity): string
 	{
 		return $entity->getId() ?? spl_object_hash($entity);
 	}
