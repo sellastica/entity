@@ -274,6 +274,7 @@ class EntityManager
 		$this->transaction->commit();
 		$this->unlock();
 		$this->queue = [];
+		$this->unitOfWork->clearRelations();
 
 		$this->onFlush();
 		$this->onFlush = [];

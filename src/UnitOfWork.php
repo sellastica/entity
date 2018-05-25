@@ -216,6 +216,11 @@ class UnitOfWork
 		}
 	}
 
+	public function clearRelations(): void
+	{
+		$this->relations = [];
+	}
+
 	/**
 	 * @return array
 	 */
