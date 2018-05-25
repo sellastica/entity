@@ -19,8 +19,23 @@ class UnitOfWork
 		foreach ($this->entities as $entityType => $entities) {
 			foreach ($entities as $key => $entity) {
 				if ($this->matchesCallable($entity, $function)) {
-					$return[$key] = $entity;
+					$return[] = $entity;
 				}
+			}
+		}
+
+		return $return;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAllEntities(): array
+	{
+		$return = [];
+		foreach ($this->entities as $entityType => $entities) {
+			foreach ($entities as $key => $entity) {
+				$return[] = $entity;
 			}
 		}
 
@@ -196,12 +211,7 @@ class UnitOfWork
 				$this->detach($entity);
 			}
 		} else {
-			foreach ($this->getEntitiesBy(function () {
-				return true;
-			}) as $entity) {
-				$this->unremove($entity);
-			}
-
+			$this->entities = [];
 			$this->relations = [];
 		}
 	}

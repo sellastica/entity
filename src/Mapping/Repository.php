@@ -317,7 +317,10 @@ abstract class Repository implements IRepository
 		//initializing has to be after attaching, otherwise it may cause looping, if initialize method
 		//searches aggregate root for an aggregate member (root is still not in the UoW)
 		$this->entityFactory->initialize($entity, $first, $second);
-		$this->em->attach($entity);
+		if ($this->em->getReflection($entity)->getAnnotation('attach') !== false) {
+			$this->em->attach($entity);
+		}
+
 		return $entity;
 	}
 

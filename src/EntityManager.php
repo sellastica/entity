@@ -38,6 +38,8 @@ class EntityManager
 	private $queue = [];
 	/** @var Connection */
 	private $connection;
+	/** @var Reflections */
+	private $reflections;
 
 
 	/**
@@ -57,6 +59,7 @@ class EntityManager
 		$this->transaction = $transaction;
 		$this->connection = $connection;
 		$this->unitOfWork = $unitOfWork;
+		$this->reflections = new Reflections();
 	}
 
 	private function lock()
@@ -269,7 +272,6 @@ class EntityManager
 		}
 
 		$this->transaction->commit();
-		$this->unitOfWork->clear();
 		$this->unlock();
 		$this->queue = [];
 
@@ -289,10 +291,7 @@ class EntityManager
 		};
 		foreach ($this->unitOfWork->getEntitiesBy($aggregateMembers) as $aggregateMember) {
 			/** @var IAggregateMember $aggregateMember */
-			if (
-				//$aggregateMember->getEntityMetadata()->isInitialized()
-				//&&
-			$aggregateMember->getAggregateRoot()) {
+			if ($aggregateMember->getAggregateRoot()) {
 				$aggregateMember->getAggregateRoot()->getEntityMetadata()->setModified($dateTime);
 			}
 		}
@@ -421,11 +420,17 @@ class EntityManager
 		DibiMapper::$multipleInsertsCount = $multipleInsertsCount;
 	}
 
-	/**
-	 * @param string $entityClass
-	 */
-	public function clear(string $entityClass): void
+	public function clear(): void
 	{
-		$this->unitOfWork->clear($entityClass);
+		$this->unitOfWork->clear();
+	}
+
+	/**
+	 * @param IEntity $entity
+	 * @return \Nette\Reflection\ClassType
+	 */
+	public function getReflection(IEntity $entity): \Nette\Reflection\ClassType
+	{
+		return $this->reflections->getReflection($entity);
 	}
 }
