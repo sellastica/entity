@@ -17,7 +17,7 @@ class Transaction
 	 */
 	public function __construct(Container $container)
 	{
-		$this->connection = $container->getService('dibi');
+		$this->connection = $container->getByType(\Dibi\Connection::class);
 	}
 
 	public function begin()

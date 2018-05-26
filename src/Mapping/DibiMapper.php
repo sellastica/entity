@@ -47,7 +47,7 @@ abstract class DibiMapper implements IMapper
 	)
 	{
 		$this->cache = new Cache($storage, Cache::QUERY_CACHE_NAMESPACE);
-		$this->database = $container->getService('dibi');
+		$this->database = $container->getByType(\Dibi\Connection::class);
 		$this->environment = $environment;
 	}
 
