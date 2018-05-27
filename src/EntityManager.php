@@ -44,13 +44,11 @@ class EntityManager
 
 	/**
 	 * @param Container $container
-	 * @param UnitOfWork $unitOfWork
 	 * @param Transaction $transaction
 	 * @param Connection $connection
 	 */
 	public function __construct(
 		Container $container,
-		UnitOfWork $unitOfWork,
 		Transaction $transaction,
 		Connection $connection
 	)
@@ -58,7 +56,7 @@ class EntityManager
 		$this->container = $container;
 		$this->transaction = $transaction;
 		$this->connection = $connection;
-		$this->unitOfWork = $unitOfWork;
+		$this->unitOfWork = new UnitOfWork();
 		$this->reflections = new Reflections();
 	}
 
