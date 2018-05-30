@@ -265,6 +265,7 @@ class EntityManager
 			}
 		} catch (\Throwable $e) {
 			$this->transaction->rollback();
+			$this->rollbackQueue();
 			$this->setForeignKeyCheck(true);
 			throw $e;
 		}
@@ -348,6 +349,16 @@ class EntityManager
 	private function addToQueue(IEntity $entity)
 	{
 		$this->queue[get_class($entity)][$entity->getId()] = $entity;
+	}
+
+	private function rollbackQueue(): void
+	{
+		//@TODO: detached entities lost their flags!
+		foreach ($this->queue as $entities) {
+			foreach ($entities as $entity) {
+				$this->unitOfWork->attach($entity);
+			}
+		}
 	}
 
 	/**
