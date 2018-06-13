@@ -13,7 +13,7 @@ interface IEntity
 	const FLAG_REMOVE = 1;
 
 	/**
-	 * @return int
+	 * @return mixed
 	 */
 	function getId();
 

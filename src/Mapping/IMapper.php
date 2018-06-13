@@ -51,9 +51,9 @@ interface IMapper
 
 	/**
 	 * @param Configuration $configuration
-	 * @return array
+	 * @return iterable
 	 */
-	function findAllIds(Configuration $configuration = null): array;
+	function findAllIds(Configuration $configuration = null): iterable;
 
 	/**
 	 * @param array $filterValues

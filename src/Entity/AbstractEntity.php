@@ -29,9 +29,9 @@ abstract class AbstractEntity implements IEntity
 
 
 	/**
-	 * @return int|null
+	 * @return mixed
 	 */
-	public function getId(): ?int
+	public function getId()
 	{
 		return $this->id;
 	}

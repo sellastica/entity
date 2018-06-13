@@ -300,7 +300,7 @@ abstract class DibiMapper implements IMapper
 	public function findAllIds(
 		Configuration $configuration = null,
 		Fluent $resource = null
-	): array
+	): iterable
 	{
 		$resource = $resource ?: $this->getResourceWithIds();
 		$this->applyConfiguration($resource, $configuration);

@@ -15,10 +15,10 @@ trait TBuilder
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @return $this
 	 */
-	public function id(int $id)
+	public function id($id)
 	{
 		$this->id = $id;
 		return $this;

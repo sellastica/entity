@@ -11,9 +11,9 @@ interface IBuilder
 	function getId();
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 */
-	function id(int $id);
+	function id($id);
 
 	/**
 	 * @return bool

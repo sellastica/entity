@@ -192,11 +192,11 @@ class UnitOfWork
 
 	/**
 	 * Loads entity from UoW, searches in all states
-	 * @param int $id
+	 * @param $id
 	 * @param string $class
 	 * @return \Sellastica\Entity\Entity\IEntity|null
 	 */
-	public function load(int $id, string $class): ?\Sellastica\Entity\Entity\IEntity
+	public function load($id, string $class): ?\Sellastica\Entity\Entity\IEntity
 	{
 		return $this->entities[$class][$id] ?? null;
 	}
