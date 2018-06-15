@@ -15,12 +15,12 @@ interface IDao
 	function getEmptyCollection(): EntityCollection;
 
 	/**
-	 * @return int
+	 * @return mixed
 	 */
-	function nextIdentity(): int;
+	function nextIdentity();
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @return \Sellastica\Entity\Entity\IEntity|null
 	 */
 	function find($id);

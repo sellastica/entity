@@ -206,10 +206,10 @@ abstract class DibiMapper implements IMapper
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @return Dibi\Row|null
 	 */
-	public function find(int $id)
+	public function find($id)
 	{
 		if ($id) {
 			$row = $this->getResource()
@@ -224,11 +224,11 @@ abstract class DibiMapper implements IMapper
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param string $field
 	 * @return mixed|false
 	 */
-	public function findField(int $id, string $field)
+	public function findField($id, string $field)
 	{
 		return $this->getResource()
 			->select(false)
@@ -258,11 +258,11 @@ abstract class DibiMapper implements IMapper
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param array $fields
 	 * @return array|null
 	 */
-	public function findFields(int $id, array $fields)
+	public function findFields($id, array $fields)
 	{
 		$result = $this->getResource()
 			->select(false)
@@ -283,7 +283,7 @@ abstract class DibiMapper implements IMapper
 		array $idsArray,
 		Configuration $configuration = null,
 		Fluent $resource = null
-	): array
+	): iterable
 	{
 		$resource = $resource ?: $this->getResourceWithIds($configuration);
 		$resource->where('%n.id IN (%iN)', $this->getTableName(), $idsArray);
@@ -318,7 +318,7 @@ abstract class DibiMapper implements IMapper
 		array $filterValues,
 		Configuration $configuration = null,
 		Fluent $resource = null
-	): array
+	): iterable
 	{
 		$resource = $resource ?: $this->getResourceWithIds($configuration);
 		$resource->where($filterValues);
@@ -337,7 +337,7 @@ abstract class DibiMapper implements IMapper
 		\Sellastica\Entity\Entity\ConditionCollection $conditions,
 		Configuration $configuration = null,
 		Dibi\Fluent $resource = null
-	): array
+	): iterable
 	{
 		$resource = $resource ?: $this->getResourceWithIds($configuration);
 		foreach ($conditions as $key => $condition) {
@@ -362,7 +362,7 @@ abstract class DibiMapper implements IMapper
 		string $modifier = 's',
 		Configuration $configuration = null,
 		Fluent $resource = null
-	): array
+	): iterable
 	{
 		$resource = $resource ?: $this->getResourceWithIds($configuration);
 		$resource->where('%n IN (%' . $modifier . 'N)', $column, $values);
@@ -569,13 +569,13 @@ abstract class DibiMapper implements IMapper
 	}
 
 	/**
-	 * @param int $entityId
+	 * @param $id
 	 * @param array $columns
 	 */
-	public function saveUncachedColumns(int $entityId, array $columns)
+	public function saveUncachedColumns($id, array $columns)
 	{
 		$this->database->update($this->getTableName(true), $columns)
-			->where('id = %i', $entityId)
+			->where('id = %i', $id)
 			->execute();
 	}
 
@@ -607,9 +607,9 @@ abstract class DibiMapper implements IMapper
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 */
-	public function deleteById(int $id)
+	public function deleteById($id)
 	{
 		try {
 			$this->database
@@ -771,7 +771,7 @@ abstract class DibiMapper implements IMapper
 	/**
 	 * @param string $slugWithoutNumbers
 	 * @param string $column
-	 * @param int $id
+	 * @param $id
 	 * @param array $groupConditions
 	 * @param string $slugNumberDivider
 	 * @return array
@@ -779,7 +779,7 @@ abstract class DibiMapper implements IMapper
 	public function findSlugs(
 		string $slugWithoutNumbers,
 		string $column = 'slug',
-		int $id = null,
+		$id = null,
 		array $groupConditions = [],
 		string $slugNumberDivider = '-'
 	): array
@@ -838,10 +838,10 @@ abstract class DibiMapper implements IMapper
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @return int|null
 	 */
-	public function findPublishable(int $id)
+	public function findPublishable($id)
 	{
 		if ($id) {
 			$resource = $this->getPublishableResourceWithIds()
@@ -856,7 +856,7 @@ abstract class DibiMapper implements IMapper
 	 * @param \Sellastica\Entity\Configuration|null $configuration
 	 * @return array
 	 */
-	public function findAllPublishableIds(Configuration $configuration = null): array
+	public function findAllPublishableIds(Configuration $configuration = null): iterable
 	{
 		return $this->findAllIds($configuration, $this->getPublishableResourceWithIds());
 	}
@@ -878,7 +878,7 @@ abstract class DibiMapper implements IMapper
 	public function findPublishableBy(
 		array $filterValues,
 		Configuration $configuration = null
-	): array
+	): iterable
 	{
 		return $this->findBy($filterValues, $configuration, $this->getPublishableResourceWithIds());
 	}

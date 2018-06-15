@@ -1,11 +1,6 @@
 <?php
 namespace Sellastica\Entity\Entity;
 
-use Nette;
-use Sellastica\Entity\Event\IDomainEventPublisher;
-use Sellastica\Entity\Relation\IEntityRelations;
-use Sellastica\Utils\Arrays;
-
 abstract class AbstractEntity implements IEntity
 {
 	/** @var array */
@@ -13,23 +8,22 @@ abstract class AbstractEntity implements IEntity
 	/** @var array */
 	public $onRemove = [];
 
-	/** @var int */
+	/** @var mixed|null */
 	protected $id;
-	/** @var IEntityRelations|null */
+	/** @var \Sellastica\Entity\Relation\IEntityRelations|null */
 	protected $relationService;
-	/** @var IDomainEventPublisher */
+	/** @var \Sellastica\Entity\Event\IDomainEventPublisher */
 	protected $eventPublisher;
 	/** @var EntityMetadata */
 	private $entityMetadata;
 	/** @var mixed */
 	private $flag;
-
 	/** @var array */
 	private $setRelations = [];
 
 
 	/**
-	 * @return mixed
+	 * @return mixed|null
 	 */
 	public function getId()
 	{
@@ -37,17 +31,17 @@ abstract class AbstractEntity implements IEntity
 	}
 
 	/**
-	 * @param IEntityRelations $relationService
+	 * @param \Sellastica\Entity\Relation\IEntityRelations $relationService
 	 */
-	public function setRelationService(IEntityRelations $relationService)
+	public function setRelationService(\Sellastica\Entity\Relation\IEntityRelations $relationService)
 	{
 		$this->relationService = $relationService;
 	}
 
 	/**
-	 * @param IDomainEventPublisher $eventPublisher
+	 * @param \Sellastica\Entity\Event\IDomainEventPublisher $eventPublisher
 	 */
-	public function setEventPublisher(IDomainEventPublisher $eventPublisher)
+	public function setEventPublisher(\Sellastica\Entity\Event\IDomainEventPublisher $eventPublisher)
 	{
 		$this->eventPublisher = $eventPublisher;
 	}
@@ -148,7 +142,7 @@ abstract class AbstractEntity implements IEntity
 	 */
 	public function getChangedData(): array
 	{
-		return Arrays::diff(
+		return \Sellastica\Utils\Arrays::diff(
 			$this->getData(),
 			$this->getEntityMetadata()->getOriginalData()
 		);
@@ -174,7 +168,7 @@ abstract class AbstractEntity implements IEntity
 	protected function parentToArray(): array
 	{
 		return [
-			'id' => $this->id,
+			'id' => $this->getId(),
 			'created' => $this->getCreated(),
 		];
 	}
@@ -198,7 +192,7 @@ abstract class AbstractEntity implements IEntity
 	 */
 	public static function getShortName()
 	{
-		return Nette\Utils\Strings::after(get_called_class(), '\\', -1);
+		return \Nette\Utils\Strings::after(get_called_class(), '\\', -1);
 	}
 
 	/**
@@ -224,6 +218,6 @@ abstract class AbstractEntity implements IEntity
 	public function equals(IEntity $entity): bool
 	{
 		return get_class($entity) === get_class($this)
-			&& $this->id === $entity->getId();
+			&& $this->getId() === $entity->getId();
 	}
 }

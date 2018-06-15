@@ -50,7 +50,7 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	/**
 	 * {@inheritDoc}
 	 */
-	public function nextIdentity(): int
+	public function nextIdentity()
 	{
 		return $this->getRepository()->nextIdentity();
 	}

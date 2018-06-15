@@ -14,9 +14,9 @@ interface IRepository
 	function getEmptyCollection(): EntityCollection;
 	
 	/**
-	 * @return int
+	 * @return mixed
 	 */
-	function nextIdentity(): int;
+	function nextIdentity();
 
 	/**
 	 * @param int|string $id

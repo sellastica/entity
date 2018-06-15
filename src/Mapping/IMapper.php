@@ -1,7 +1,6 @@
 <?php
 namespace Sellastica\Entity\Mapping;
 
-use Dibi;
 use Sellastica\Entity\Configuration;
 use Sellastica\Entity\Entity\IEntity;
 use Sellastica\Entity\Relation\ManyToManyRelation;
@@ -10,22 +9,22 @@ use Sellastica\Entity\Relation\RelationGetManager;
 interface IMapper
 {
 	/**
-	 * @return int
+	 * @return mixed
 	 */
-	function nextIdentity(): int;
+	function nextIdentity();
 
 	/**
-	 * @param int $id
-	 * @return Dibi\Row|null
+	 * @param $id
+	 * @return mixed|null
 	 */
-	function find(int $id);
+	function find($id);
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param array $fields
 	 * @return array|null
 	 */
-	function findFields(int $id, array $fields);
+	function findFields($id, array $fields);
 
 	/**
 	 * @param string $field
@@ -36,18 +35,18 @@ interface IMapper
 	function findFieldBy(string $field, array $filterValues, Configuration $configuration = null): array;
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param string $field
 	 * @return mixed|false
 	 */
-	function findField(int $id, string $field);
+	function findField($id, string $field);
 
 	/**
 	 * @param array $idsArray
 	 * @param Configuration $configuration
 	 * @return array
 	 */
-	function findByIds(array $idsArray, Configuration $configuration = null): array;
+	function findByIds(array $idsArray, Configuration $configuration = null): iterable;
 
 	/**
 	 * @param Configuration $configuration
@@ -60,19 +59,17 @@ interface IMapper
 	 * @param Configuration $configuration
 	 * @return array
 	 */
-	function findBy(array $filterValues, Configuration $configuration = null): array;
+	function findBy(array $filterValues, Configuration $configuration = null): iterable;
 
 	/**
 	 * @param \Sellastica\Entity\Entity\ConditionCollection $conditions
 	 * @param \Sellastica\Entity\Configuration $configuration
-	 * @param \Dibi\Fluent $resource
 	 * @return array
 	 */
 	public function findByConditions(
 		\Sellastica\Entity\Entity\ConditionCollection $conditions,
-		Configuration $configuration = null,
-		Dibi\Fluent $resource = null
-	): array;
+		Configuration $configuration = null
+	): iterable;
 
 	/**
 	 * @param string $column
@@ -86,7 +83,7 @@ interface IMapper
 		array $values,
 		string $modifier = 's',
 		Configuration $configuration = null
-	): array;
+	): iterable;
 
 	/**
 	 * @param array $filterValues
@@ -161,16 +158,16 @@ interface IMapper
 	function removeRelation(ManyToManyRelation $relation);
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @return int|null
 	 */
-	function findPublishable(int $id);
+	function findPublishable($id);
 
 	/**
 	 * @param Configuration $configuration
 	 * @return array
 	 */
-	function findAllPublishableIds(Configuration $configuration = null): array;
+	function findAllPublishableIds(Configuration $configuration = null): iterable;
 
 	/**
 	 * @param array $filterValues
@@ -183,7 +180,7 @@ interface IMapper
 	 * @param Configuration $configuration
 	 * @return array
 	 */
-	function findPublishableBy(array $filterValues, Configuration $configuration = null): array;
+	function findPublishableBy(array $filterValues, Configuration $configuration = null): iterable;
 
 	/**
 	 * @param array $filterValues
@@ -215,16 +212,15 @@ interface IMapper
 	function update(IEntity $entity);
 
 	/**
-	 * @param int $entityId
+	 * @param $id
 	 * @param array $columns
-	 * @return
 	 */
-	function saveUncachedColumns(int $entityId, array $columns);
+	function saveUncachedColumns($id, array $columns);
 
 	/**
-	 * @param int $entityId
+	 * @param $id
 	 */
-	function deleteById(int $entityId);
+	function deleteById($id);
 
 	/**
 	 * @return void
@@ -234,7 +230,7 @@ interface IMapper
 	/**
 	 * @param string $slugWithoutNumbers
 	 * @param string $column
-	 * @param int $id
+	 * @param $id
 	 * @param array $groupConditions
 	 * @param string $slugNumberDivider
 	 * @return array
@@ -242,7 +238,7 @@ interface IMapper
 	function findSlugs(
 		string $slugWithoutNumbers,
 		string $column = 'slug',
-		int $id = null,
+		$id = null,
 		array $groupConditions = [],
 		string $slugNumberDivider = '-'
 	): array;

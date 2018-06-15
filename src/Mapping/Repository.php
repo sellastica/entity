@@ -43,9 +43,9 @@ abstract class Repository implements IRepository
 	}
 
 	/**
-	 * @return int
+	 * @return mixed
 	 */
-	public function nextIdentity(): int
+	public function nextIdentity()
 	{
 		return $this->dao->nextIdentity();
 	}
@@ -58,7 +58,7 @@ abstract class Repository implements IRepository
 	 */
 	public function find($id = null, $first = null, $second = null): ?IEntity
 	{
-		if (empty($id) || !is_numeric($id)) {
+		if (empty($id) || !preg_match('~[a-zA-Z0-9]~', $id)) {
 			return null;
 		}
 
