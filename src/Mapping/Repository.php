@@ -71,11 +71,11 @@ abstract class Repository implements IRepository
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param array $fields
 	 * @return array|null
 	 */
-	public function findFields(int $id, array $fields)
+	public function findFields($id, array $fields)
 	{
 		return $this->dao->findFields($id, $fields);
 	}
@@ -92,11 +92,11 @@ abstract class Repository implements IRepository
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param string $field
 	 * @return mixed|false
 	 */
-	public function findField(int $id, string $field)
+	public function findField($id, string $field)
 	{
 		return $this->dao->findField($id, $field);
 	}
@@ -182,10 +182,10 @@ abstract class Repository implements IRepository
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @return bool
 	 */
-	public function exists(int $id): bool
+	public function exists($id): bool
 	{
 		return $this->dao->exists($id);
 	}
@@ -334,7 +334,7 @@ abstract class Repository implements IRepository
 	 * @param int|null $id
 	 * @return IEntity|null
 	 */
-	public function findPublishable(int $id = null)
+	public function findPublishable($id = null)
 	{
 		if (empty($id) || !is_numeric($id)) {
 			return null;
@@ -403,7 +403,7 @@ abstract class Repository implements IRepository
 	/**
 	 * @param string $slugWithoutNumbers
 	 * @param string $column
-	 * @param int $id
+	 * @param $id
 	 * @param array $groupConditions
 	 * @param string $slugNumberDivider
 	 * @return array
@@ -411,7 +411,7 @@ abstract class Repository implements IRepository
 	public function findSlugs(
 		string $slugWithoutNumbers,
 		string $column = 'slug',
-		int $id = null,
+		$id = null,
 		array $groupConditions = [],
 		string $slugNumberDivider = '-'
 	): array

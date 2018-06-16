@@ -64,11 +64,11 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param array $fields
 	 * @return array|null
 	 */
-	public function findFields(int $id, array $fields)
+	public function findFields($id, array $fields)
 	{
 		return $this->getRepository()->findFields($id, $fields);
 	}
@@ -85,11 +85,11 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	}
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param string $field
 	 * @return mixed|false
 	 */
-	public function findField(int $id, string $field)
+	public function findField($id, string $field)
 	{
 		return $this->getRepository()->findField($id, $field);
 	}
@@ -148,7 +148,7 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	/**
 	 * {@inheritDoc}
 	 */
-	public function exists(int $id): bool
+	public function exists($id): bool
 	{
 		return $this->getRepository()->exists($id);
 	}
@@ -233,7 +233,7 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	/**
 	 * {@inheritDoc}
 	 */
-	public function findPublishable(int $id = null)
+	public function findPublishable($id = null)
 	{
 		return $this->getRepository()->findPublishable($id);
 	}
@@ -276,7 +276,7 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	/**
 	 * @param string $slugWithoutNumbers
 	 * @param string $column
-	 * @param int $id
+	 * @param $id
 	 * @param array $groupConditions
 	 * @param string $slugNumberDivider
 	 * @return array
@@ -284,7 +284,7 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	public function findSlugs(
 		string $slugWithoutNumbers,
 		string $column = 'slug',
-		int $id = null,
+		$id = null,
 		array $groupConditions = [],
 		string $slugNumberDivider = '-'
 	): array

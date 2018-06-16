@@ -26,18 +26,18 @@ interface IDao
 	function find($id);
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param array $fields
 	 * @return array|null
 	 */
-	function findFields(int $id, array $fields);
+	function findFields($id, array $fields);
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param string $field
 	 * @return mixed|false
 	 */
-	function findField(int $id, string $field);
+	function findField($id, string $field);
 
 	/**
 	 * @param string $field
@@ -124,10 +124,10 @@ interface IDao
 	): array;
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @return bool
 	 */
-	function exists(int $id): bool;
+	function exists($id): bool;
 
 	/**
 	 * @param array $filterValues
@@ -170,10 +170,10 @@ interface IDao
 	function removeRelation(ManyToManyRelation $relation);
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @return \Sellastica\Entity\Entity\IEntity|null
 	 */
-	function findPublishable(int $id);
+	function findPublishable($id);
 
 	/**
 	 * @param Configuration $configuration
@@ -224,7 +224,7 @@ interface IDao
 	/**
 	 * @param string $slugWithoutNumbers
 	 * @param string $column
-	 * @param int $id
+	 * @param $id
 	 * @param array $groupConditions
 	 * @param string $slugNumberDivider
 	 * @return array
@@ -232,7 +232,7 @@ interface IDao
 	function findSlugs(
 		string $slugWithoutNumbers,
 		string $column = 'slug',
-		int $id = null,
+		$id = null,
 		array $groupConditions = [],
 		string $slugNumberDivider = '-'
 	): array;

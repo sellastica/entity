@@ -25,18 +25,18 @@ interface IRepository
 	function find($id): ?IEntity;
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param array $fields
 	 * @return array|null
 	 */
-	function findFields(int $id, array $fields);
+	function findFields($id, array $fields);
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @param string $field
 	 * @return mixed|false
 	 */
-	function findField(int $id, string $field);
+	function findField($id, string $field);
 
 	/**
 	 * @param string $field
@@ -120,10 +120,10 @@ interface IRepository
 	): array;
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @return bool
 	 */
-	function exists(int $id): bool;
+	function exists($id): bool;
 
 	/**
 	 * @param array $filterValues
@@ -156,10 +156,10 @@ interface IRepository
 	function getRelation(RelationGetManager $relationGetManager);
 
 	/**
-	 * @param int $id
+	 * @param $id
 	 * @return IEntity|null
 	 */
-	function findPublishable(int $id);
+	function findPublishable($id);
 
 	/**
 	 * @param array $filterValues
@@ -189,7 +189,7 @@ interface IRepository
 	/**
 	 * @param string $slugWithoutNumbers
 	 * @param string $column
-	 * @param int $id
+	 * @param $id
 	 * @param array $groupConditions
 	 * @param string $slugNumberDivider
 	 * @return array
@@ -197,7 +197,7 @@ interface IRepository
 	function findSlugs(
 		string $slugWithoutNumbers,
 		string $column = 'slug',
-		int $id = null,
+		$id = null,
 		array $groupConditions = [],
 		string $slugNumberDivider = '-'
 	): array;
