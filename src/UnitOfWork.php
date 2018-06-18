@@ -198,6 +198,10 @@ class UnitOfWork
 	 */
 	public function load($id, string $class): ?\Sellastica\Entity\Entity\IEntity
 	{
+		if (!is_int($id)) {
+			$id = (string)$id;
+		}
+
 		return $this->entities[$class][$id] ?? null;
 	}
 
