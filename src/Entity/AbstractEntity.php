@@ -31,6 +31,14 @@ abstract class AbstractEntity implements IEntity
 	}
 
 	/**
+	 * @return null|\Sellastica\Entity\Relation\IEntityRelations
+	 */
+	public function getRelationService(): ?\Sellastica\Entity\Relation\IEntityRelations
+	{
+		return $this->relationService;
+	}
+
+	/**
 	 * @param \Sellastica\Entity\Relation\IEntityRelations $relationService
 	 */
 	public function setRelationService(\Sellastica\Entity\Relation\IEntityRelations $relationService)
@@ -144,7 +152,8 @@ abstract class AbstractEntity implements IEntity
 	{
 		return \Sellastica\Utils\Arrays::diff(
 			$this->getData(),
-			$this->getEntityMetadata()->getOriginalData()
+			$this->getEntityMetadata()->getOriginalData(),
+			false
 		);
 	}
 

@@ -196,7 +196,6 @@ class EntityManager
 			call_user_func($function, $entity);
 		}
 
-		$this->unitOfWork->detach($entity, false); //without dependencies - they will be persisted after roots
 		$this->addToQueue($entity);
 	}
 
