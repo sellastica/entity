@@ -44,8 +44,7 @@ trait TBuilder
 	public function hydrate(\Traversable $data)
 	{
 		foreach ($data as $property => $value) {
-			if (method_exists($this, $property)
-				&& !isset($this->$property)) {
+			if (method_exists($this, $property)) {
 				$this->$property($value);
 			}
 		}
