@@ -26,6 +26,8 @@ class EntityManager
 	/** @var array */
 	public $onEntityRemoved = [];
 
+	/** @var bool If entity and mapping namespaces corresponse together */
+	private $namespacesCorrespond;
 	/** @var int */
 	private $state = self::STATE_UNLOCKED;
 	/** @var Container */
@@ -43,16 +45,19 @@ class EntityManager
 
 
 	/**
+	 * @param bool $namespacesCorrespond
 	 * @param Container $container
 	 * @param Transaction $transaction
 	 * @param Connection $connection
 	 */
 	public function __construct(
+		bool $namespacesCorrespond = false,
 		Container $container,
 		Transaction $transaction,
 		Connection $connection
 	)
 	{
+		$this->namespacesCorrespond = $namespacesCorrespond;
 		$this->container = $container;
 		$this->transaction = $transaction;
 		$this->connection = $connection;
@@ -361,63 +366,91 @@ class EntityManager
 	}
 
 	/**
-	 * @param IEntity|string $entity
+	 * @param IEntity|string $entityClass
 	 * @return \Sellastica\Entity\Mapping\IDao|object
 	 */
-	public function getDao($entity)
+	public function getDao($entityClass)
 	{
-		if ($entity instanceof IEntity) {
-			$entity = $entity::getShortName();
-		}
+		if ($this->namespacesCorrespond) {
+			if ($entityClass instanceof IEntity) {
+				$entityClass = get_class($entityClass);
+			}
 
-		$this->assertEntityClass($entity);
-		if (strpos($entity, '\\') !== false) {
-			$entity = Strings::after($entity, '\\', -1);
-		}
+			$repositoryClass = \Sellastica\Utils\Strings::replaceLast('\\Entity\\', '\\Mapping\\', $entityClass)
+				. 'Dao';
+			return $this->container->getByType($repositoryClass);
+		} else {
+			if ($entityClass instanceof IEntity) {
+				$entityClass = $entityClass::getShortName();
+			}
 
-		return $this->container->getService(Strings::firstLower($entity) . 'Dao');
+			$this->assertEntityClass($entityClass);
+			if (strpos($entityClass, '\\') !== false) {
+				$entityClass = Strings::after($entityClass, '\\', -1);
+			}
+
+			return $this->container->getService(Strings::firstLower($entityClass) . 'Dao');
+		}
 	}
 
 	/**
-	 * @param IEntity|string $entity
+	 * @param IEntity|string $entityClass
 	 * @return \Sellastica\Entity\Mapping\IRepository|object
 	 */
-	public function getRepository($entity): IRepository
+	public function getRepository($entityClass): IRepository
 	{
-		if ($entity instanceof IEntity) {
-			$entity = $entity::getShortName();
-		}
+		if ($this->namespacesCorrespond) {
+			if ($entityClass instanceof IEntity) {
+				$entityClass = get_class($entityClass);
+			}
 
-		$this->assertEntityClass($entity);
-		if (strpos($entity, '\\') !== false) {
-			$entity = Strings::after($entity, '\\', -1);
-		}
+			$repositoryClass = \Sellastica\Utils\Strings::replaceLast('\\Entity\\', '\\Mapping\\', $entityClass)
+				. 'Repository';
+			return $this->container->getByType($repositoryClass);
+		} else {
+			if ($entityClass instanceof IEntity) {
+				$entityClass = $entityClass::getShortName();
+			}
 
-		return $this->container->getService(Strings::firstLower($entity) . 'Repository');
+			$this->assertEntityClass($entityClass);
+			if (strpos($entityClass, '\\') !== false) {
+				$entityClass = Strings::after($entityClass, '\\', -1);
+			}
+
+			return $this->container->getService(Strings::firstLower($entityClass) . 'Repository');
+		}
 	}
 
 	/**
-	 * @param IEntity|string $entity
+	 * @param IEntity|string $entityClass
 	 * @return \Sellastica\Entity\Entity\EntityFactory|object
 	 */
-	public function getEntityFactory($entity): EntityFactory
+	public function getEntityFactory($entityClass): EntityFactory
 	{
-		if ($entity instanceof IEntity) {
-			$entity = $entity::getShortName();
+		if ($this->namespacesCorrespond) {
+			if ($entityClass instanceof IEntity) {
+				$entityClass = get_class($entityClass);
+			}
+
+			return $this->container->getByType($entityClass . 'Factory');
+		} else {
+			if ($entityClass instanceof IEntity) {
+				$entityClass = $entityClass::getShortName();
+			}
 		}
 
-		$this->assertEntityClass($entity);
-		return $this->container->getService(Strings::firstLower($entity) . 'Factory');
+		$this->assertEntityClass($entityClass);
+		return $this->container->getService(Strings::firstLower($entityClass) . 'Factory');
 	}
 
 	/**
-	 * @param $entity
+	 * @param $entityClass
 	 * @throws \InvalidArgumentException
 	 */
-	private function assertEntityClass($entity)
+	private function assertEntityClass($entityClass)
 	{
-		if (!is_string($entity)) {
-			throw new \InvalidArgumentException('Parameter $entity must be either instance of IEntity or a string');
+		if (!is_string($entityClass)) {
+			throw new \InvalidArgumentException('Parameter $entityClass must be either instance of IEntity or a string');
 		}
 	}
 
