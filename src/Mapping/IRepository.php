@@ -55,7 +55,7 @@ interface IRepository
 
 	/**
 	 * @param Configuration $configuration
-	 * @return EntityCollection
+	 * @return EntityCollection|mixed
 	 */
 	function findAll(Configuration $configuration = null): EntityCollection;
 
@@ -69,7 +69,7 @@ interface IRepository
 	/**
 	 * @param \Sellastica\Entity\Entity\Condition[]|\Sellastica\Entity\Entity\ConditionCollection $conditions
 	 * @param Configuration $configuration
-	 * @return EntityCollection
+	 * @return EntityCollection|mixed
 	 */
 	function findByConditions($conditions, Configuration $configuration = null): EntityCollection;
 
@@ -78,7 +78,7 @@ interface IRepository
 	 * @param array $values
 	 * @param string $modifier
 	 * @param Configuration $configuration
-	 * @return EntityCollection
+	 * @return EntityCollection|mixed
 	 */
 	function findIn(
 		string $column,
@@ -90,7 +90,7 @@ interface IRepository
 	/**
 	 * @param array $idsArray
 	 * @param Configuration $configuration
-	 * @return EntityCollection
+	 * @return EntityCollection|mixed
 	 */
 	function findByIds(array $idsArray, Configuration $configuration = null): EntityCollection;
 
@@ -169,14 +169,14 @@ interface IRepository
 
 	/**
 	 * @param Configuration $configuration
-	 * @return EntityCollection
+	 * @return EntityCollection|mixed
 	 */
 	function findAllPublishable(Configuration $configuration = null): EntityCollection;
 
 	/**
 	 * @param array $filterValues
 	 * @param Configuration $configuration
-	 * @return EntityCollection|array
+	 * @return EntityCollection|mixed
 	 */
 	function findPublishableBy(array $filterValues, Configuration $configuration = null);
 
