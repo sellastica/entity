@@ -168,7 +168,10 @@ abstract class AbstractEntity implements IEntity
 	private function getData(): array
 	{
 		//add modified to data, so we can handle modified attribute changes
-		return array_merge($this->toArray(), ['modified' => $this->getModified()]);
+		return array_merge(
+			$this->toArray(false), //false is present because of mongo diff
+			['modified' => $this->getModified()]
+		);
 	}
 
 	/**
