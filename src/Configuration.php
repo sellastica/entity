@@ -14,6 +14,8 @@ class Configuration
 	private $lastModified;
 	/** @var bool */
 	private $retrieveIds = false;
+	/** @var array */
+	private $options = [];
 
 
 	/**
@@ -119,6 +121,34 @@ class Configuration
 	{
 		$this->retrieveIds = $retrieveIds;
 		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getOptions(): array
+	{
+		return $this->options;
+	}
+
+	/**
+	 * @param string $name
+	 * @param $value
+	 * @return $this
+	 */
+	public function setOption(string $name, $value): Configuration
+	{
+		$this->options[$name] = $value;
+		return $this;
+	}
+
+	/**
+	 * @param string $name
+	 * @return mixed|null
+	 */
+	public function getOption(string $name)
+	{
+		return $this->options[$name] ?? null;
 	}
 
 	/**
