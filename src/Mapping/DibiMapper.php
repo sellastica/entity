@@ -530,6 +530,7 @@ abstract class DibiMapper implements IMapper
 		try {
 			$this->database
 				->insert($this->getTableName(true), $entity->toArray())
+				->setFlag('IGNORE')
 				->execute();
 
 			if (!$entity->getId()) {
@@ -559,7 +560,7 @@ abstract class DibiMapper implements IMapper
 
 				if (!empty($values)) {
 					$this->database->query(
-						'INSERT INTO [' . $this->getTableName(true) . '] %ex', $values
+						'INSERT IGNORE INTO [' . $this->getTableName(true) . '] %ex', $values
 					);
 				}
 			} catch (Dibi\Exception $e) {
