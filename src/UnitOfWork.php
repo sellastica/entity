@@ -214,6 +214,10 @@ class UnitOfWork
 			foreach ($this->getEntitiesByClassName($entityClass) as $entity) {
 				$this->detach($entity);
 			}
+
+			if (isset($this->entities[$entityClass])) {
+				unset($this->entities[$entityClass]);
+			}
 		} else {
 			$this->entities = [];
 			$this->relations = [];
