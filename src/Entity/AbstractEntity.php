@@ -169,7 +169,7 @@ abstract class AbstractEntity implements IEntity
 	{
 		//add modified to data, so we can handle modified attribute changes
 		return array_merge(
-			$this->toArray(false), //false is present because of mongo diff
+			$this->toArray(),
 			['modified' => $this->getModified()]
 		);
 	}
