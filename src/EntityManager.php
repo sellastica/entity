@@ -462,9 +462,12 @@ class EntityManager
 		DibiMapper::$multipleInsertsCount = $multipleInsertsCount;
 	}
 
-	public function clear(): void
+	/**
+	 * @param string|null $entityClass
+	 */
+	public function clear(string $entityClass = null): void
 	{
-		$this->unitOfWork->clear();
+		$this->unitOfWork->clear($entityClass);
 	}
 
 	/**
