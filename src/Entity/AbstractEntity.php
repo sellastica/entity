@@ -142,7 +142,7 @@ abstract class AbstractEntity implements IEntity
 	public function isChanged(): bool
 	{
 		return $this->getEntityMetadata()->getState()->isNew()
-			|| ($this->getEntityMetadata()->getOriginalData() !== $this->getData());
+			|| ($this->getEntityMetadata()->getOriginalData() != $this->getData()); //!=
 	}
 
 	/**
