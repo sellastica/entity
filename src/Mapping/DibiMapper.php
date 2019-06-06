@@ -520,6 +520,15 @@ abstract class DibiMapper implements IMapper
 	}
 
 	/**
+	 * @param array $filter
+	 * @param array $data
+	 */
+	public function updateMany(array $filter, array $data): void
+	{
+		throw new Nette\NotImplementedException();
+	}
+
+	/**
 	 * @param IEntity $entity
 	 * @throws Dibi\Exception
 	 * @throws StorageDuplicateEntryException

@@ -207,4 +207,10 @@ interface IRepository
 	 * @param array $columns
 	 */
 	function saveUncachedColumns(int $entityId, array $columns);
+
+	/**
+	 * @param array $filter
+	 * @param array $data
+	 */
+	function updateMany(array $filter, array $data): void;
 }

@@ -212,6 +212,12 @@ interface IMapper
 	function update(IEntity $entity);
 
 	/**
+	 * @param array $filter
+	 * @param array $data
+	 */
+	function updateMany(array $filter, array $data): void;
+
+	/**
 	 * @param $id
 	 * @param array $columns
 	 */

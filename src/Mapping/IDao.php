@@ -212,6 +212,12 @@ interface IDao
 	function batchInsert(array $entities): void;
 
 	/**
+	 * @param array $filter
+	 * @param array $data
+	 */
+	function updateMany(array $filter, array $data): void;
+
+	/**
 	 * @param int $entityId
 	 */
 	function deleteById($entityId);

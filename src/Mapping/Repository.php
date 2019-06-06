@@ -401,6 +401,15 @@ abstract class Repository implements IRepository
 	}
 
 	/**
+	 * @param array $filter
+	 * @param array $data
+	 */
+	public function updateMany(array $filter, array $data): void
+	{
+		$this->dao->updateMany($filter, $data);
+	}
+
+	/**
 	 * @param string $slugWithoutNumbers
 	 * @param string $column
 	 * @param $id

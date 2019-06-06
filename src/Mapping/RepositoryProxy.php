@@ -300,4 +300,13 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	{
 		$this->getRepository()->saveUncachedColumns($entityId, $columns);
 	}
+
+	/**
+	 * @param array $filter
+	 * @param array $data
+	 */
+	public function updateMany(array $filter, array $data): void
+	{
+		$this->getRepository()->updateMany($filter, $data);
+	}
 }
