@@ -16,6 +16,8 @@ class Configuration
 	private $retrieveIds = false;
 	/** @var array */
 	private $options = [];
+	/** @var int|null */
+	private $offset;
 
 
 	/**
@@ -57,6 +59,24 @@ class Configuration
 		$this->paginator->setItemsPerPage($limit);
 		$this->paginator->setPage($offset / $limit + 1);
 		return $this;
+	}
+
+	/**
+	 * By normal way, offset is counted from page number and items count per page
+	 * If we need to set different offset, we need to force it via this method
+	 * @param int $offset
+	 */
+	public function forceOffset(int $offset): void
+	{
+		$this->offset = $offset;
+	}
+
+	/**
+	 * @return int|null
+	 */
+	public function getOffset(): ?int
+	{
+		return $this->offset;
 	}
 
 	/**
