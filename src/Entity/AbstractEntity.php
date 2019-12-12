@@ -142,7 +142,7 @@ abstract class AbstractEntity implements IEntity
 	public function isChanged(): bool
 	{
 		return $this->getEntityMetadata()->getState()->isNew()
-			|| ($this->getEntityMetadata()->getOriginalData() != $this->getData()); //!=
+			|| ($this->getEntityMetadata()->getOriginalData() != $this->getCurrentData()); //!=
 	}
 
 	/**
@@ -151,7 +151,7 @@ abstract class AbstractEntity implements IEntity
 	public function getChangedData(): array
 	{
 		return \Sellastica\Utils\Arrays::diff(
-			$this->getData(),
+			$this->getCurrentData(),
 			$this->getEntityMetadata()->getOriginalData(),
 			false
 		);
@@ -159,13 +159,13 @@ abstract class AbstractEntity implements IEntity
 
 	public function updateOriginalData()
 	{
-		$this->getEntityMetadata()->setOriginalData($this->getData());
+		$this->getEntityMetadata()->setOriginalData($this->getCurrentData());
 	}
 
 	/**
 	 * @return array
 	 */
-	private function getData(): array
+	public function getCurrentData(): array
 	{
 		//add modified to data, so we can handle modified attribute changes
 		return array_merge(
