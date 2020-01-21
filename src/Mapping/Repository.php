@@ -102,6 +102,16 @@ abstract class Repository implements IRepository
 	}
 
 	/**
+	 * @param array $filter
+	 * @param array $fields
+	 * @return iterable
+	 */
+	public function findFieldsBy(array $filter, array $fields): iterable
+	{
+		return $this->dao->findFieldsBy($filter, $fields);
+	}
+
+	/**
 	 * @param array $idsArray
 	 * @param Configuration|null $configuration
 	 * @return EntityCollection

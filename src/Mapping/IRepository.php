@@ -47,6 +47,12 @@ interface IRepository
 	function findFieldBy(string $field, array $filterValues, Configuration $configuration = null): array;
 
 	/**
+	 * @param array $filter
+	 * @param array $fields
+	 */
+	function findFieldsBy(array $filter, array $fields);
+
+	/**
 	 * @param array $filterValues
 	 * @param Configuration|null $configuration
 	 * @return IEntity|mixed|null

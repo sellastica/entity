@@ -95,6 +95,16 @@ abstract class RepositoryProxy implements IRepositoryProxy
 	}
 
 	/**
+	 * @param array $filter
+	 * @param array $fields
+	 * @return iterable
+	 */
+	public function findFieldsBy(array $filter, array $fields): iterable
+	{
+		return $this->getRepository()->findFieldsBy($filter, $fields);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function findByIds(
